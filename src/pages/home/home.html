@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Produtos Disponíveis</h3>
+
+  <ion-card *ngFor="let p of produtos">
+    <ion-card-header>
+      {{p.descricao}}
+    </ion-card-header>
+    <ion-card-content>
+      <p>Preço: {{p.preco | currency}}</p>
+      <p>Quantidade: {{p.quantidade}}</p>
+      <p>Código: {{p.codigo}}</p>
+      <button ion-button primary (click)="goToProduto(p.codigo)">Detalhes</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
