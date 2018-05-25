@@ -7,46 +7,47 @@ import { Auth0Cordova } from '@auth0/cordova';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
-
+import { ContactPage } from '../pages/contact/contact';
 
 @Component({
-  templateUrl: 'app.html'
+	templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+	@ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+	rootPage: any = LoginPage;
 
-  pages: Array<{title: string, component: any}>;
+	pages: Array<{ title: string; component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
+	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+		this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Login', component: LoginPage }
-    ];
+		// used for an example of ngFor and navigation
+		this.pages = [
+			{ title: 'Home', component: HomePage },
+			{ title: 'List', component: ListPage },
+			{ title: 'Login', component: LoginPage },
+			{ title: 'Contato', component: ContactPage }
+		];
+	}
 
-  }
+	initializeApp() {
+		this.platform.ready().then(() => {
+			// Okay, so the platform is ready and our plugins are available.
+			// Here you can do any higher level native things you might need.
+			this.statusBar.styleDefault();
+			this.splashScreen.hide();
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+			(window as any).handleOpenURL = (url: string) => {
+				Auth0Cordova.onRedidirectUri(url);
+			};
+		});
+	}
 
-      (window as any).handleOpenURL = (url: string) => {
-        Auth0Cordova.onRedidirectUri(url);
-      }
-    });
-  }
-
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+	openPage(page) {
+		// Reset the content nav to have just this page
+		// we wouldn't want the back button to show in this scenario
+		this.nav.setRoot(page.component);
+		this.title = page.title;
+	}
 }

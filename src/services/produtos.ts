@@ -3,16 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ProdutoService {
+	constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {
+	listarProdutos() {
+		return this.http.get('http://topicos-especiais.local:3000/produto');
+	}
 
-    }
-
-    listarProdutos() {
-        return this.http.get('http://topicos-especiais.local:3000/produto');
-    }
-
-    obterProduto(codigo) {
-        return this.http.get('http://topicos-especiais.local:3000/produto/' + codigo);
-    }
+	obterProduto(codigo) {
+		return this.http.get('http://topicos-especiais.local:3000/produto/' + codigo);
+	}
 }
